@@ -44,7 +44,6 @@ def get_data():
         'content_text': content_text,
         'percentage': percentage,
         'passed': passed,
-        'new_data' : new_data,
         'failed': failed,
         'text_to_passed': text_to_passed,
         'text_to_failed': text_to_failed

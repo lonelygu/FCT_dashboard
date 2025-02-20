@@ -12,7 +12,6 @@ $(document).ready(function() {
                 let successPercentage = response.percentage;  // Процент успешных
                 let passed = response.passed;  // Количество прошедших
                 let failed = response.failed;  // Количество не прошедших
-                let new_data = response.new_data;
                 let textToPassed = response.text_to_passed;
                 let textToFailed = response.text_to_failed;
 
