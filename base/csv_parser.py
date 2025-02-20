@@ -1,28 +1,29 @@
-import csv
+import pandas as pd
 
 
-def calculate_statistics(csv_file):
+def csv_parser(file_path):
     """
-    Функция для вычисления процента прошедших обучение, а также количества прошедших и не прошедших.
-
-    :param csv_file: Путь к файлу CSV
-    :return: Процент прошедших обучение, количество прошедших и не прошедших обучение
+    Универсальный парсер CSV, который:
+    - Определяет нужный столбец (кроме 'ID')
+    - Считает количество 0 и 1
+    - Возвращает (passed, failed)
     """
-    passed = 0
-    not_passed = 0
-    total = 0
-
     try:
-        with open(csv_file, mode="r", encoding="utf-8") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                total += int(row["Количество"])  # Общая сумма
-                if row["Статус"] == "Прошли обучение":
-                    passed += int(row["Количество"])
-                elif row["Статус"] == "Не прошли":
-                    not_passed += int(row["Количество"])
+        df = pd.read_csv(file_path)
+        print(df.head())  # Посмотрим первые строки
+        print(df.columns)  # Проверим названия столбцов
 
-        # Рассчитываем процент
-        return passed, not_passed
-    except FileNotFoundError:
-        return 0, 0  # Если файла нет, возвращаем 0
+        # Находим первый столбец с данными (исключаем ID)
+        data_column = [col for col in df.columns if col.lower() != "id"][0]
+
+        # Подсчет значений
+        counts = df.groupby(data_column)[data_column].count()
+
+        passed = counts.get(1, 0)  # Количество значений 1
+        failed = counts.get(0, 0)  # Количество значений 0
+
+        return passed, failed
+    except Exception as e:
+        print(f"Ошибка при обработке файла {file_path}: {e}")
+        return 0, 0
+
