@@ -21,33 +21,43 @@ routes = {
 @main.route("/get_data", methods=["POST"])
 def get_data():
     data = request.get_json()
-    year = data.get("year")
+    year = data.get("year", 2023)  # По умолчанию 2023 год
 
-    # Определяем, какой файл использовать
     file_mapping = {
         2023: "data/data1.csv",
         2024: "data/data2.csv",
         2025: "data/data3.csv"
     }
 
-    # По умолчанию 2023 год
     csv_file = file_mapping.get(year, "data/data1.csv")
 
-    # Получаем данные из парсера
-    percentage, passed, failed = calculate_statistics(csv_file)
-    content_text = "Обучение специалистов ППЭ ЕГЭ"
-    new_data = f"Прошли обучение: {passed}"
-    text_to_passed = f"Прошли обучение: {passed}"
-    text_to_failed = f"Не прошли обучение: {failed}"
-    # Формируем и возвращаем JSON ответ
-    return jsonify({
-        'content_text': content_text,
-        'percentage': percentage,
-        'passed': passed,
-        'failed': failed,
-        'text_to_passed': text_to_passed,
-        'text_to_failed': text_to_failed
-    })
+    passed, failed = calculate_statistics(csv_file)
+    total = passed + failed
+    if isinstance(total, int) or (isinstance(total, float) and total.is_integer()):
+        total = int(total)  # Приводим к int, если это float с целым значением
+    else:
+        total = None  # Или можно выбросить ошибку
+    return jsonify(
+        {
+            "data-container_1": {
+                "content_text": f"График 1 ({year})",
+                "percentage": round((passed / total) * 100 if total > 0 else 0, 2),
+                "passed": passed,
+                "failed": failed,
+                "text_to_passed": f"Пройдено: {passed}",
+                "text_to_failed": f"Не пройдено: {failed}"
+            },
+            "data-container_2": {
+                "content_text": f"График 2 ({year})",
+                "percentage": round((passed / total) * 100 if total > 0 else 0, 2) ,
+                "passed": passed - 10,
+                "failed": failed + 10,
+                "text_to_passed": f"Пройдено: {passed - 10}",
+                "text_to_failed": f"Не пройдено: {failed + 10}"
+            }
+        }
+    )
+
 
 
 # Register each route dynamically with a unique function name

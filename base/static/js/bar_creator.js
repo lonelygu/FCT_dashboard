@@ -1,49 +1,38 @@
 $(document).ready(function() {
-    // Функция для обновления прогресс-бара и статистики
-    function updateProgressBar(year) {
+    function updateProgressBars(year) {
         $.ajax({
             url: "/get_data",
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify({ year: year }),
             success: function(response) {
-                // Обновляем все данные, полученные от сервера
-                let contentText = response.content_text;  // Заголовок
-                let successPercentage = response.percentage;  // Процент успешных
-                let passed = response.passed;  // Количество прошедших
-                let failed = response.failed;  // Количество не прошедших
-                let textToPassed = response.text_to_passed;
-                let textToFailed = response.text_to_failed;
 
+                $(".linebar").each(function(index, element) {
+                    let containerId = "data-container_" + (index + 1);
+                    let data = response[containerId];
 
-                // Обновляем текст с процентом
-                $("#progress-text").text(successPercentage + "%");
+                    if (data) {
+                        let percentage = Math.min(100, parseFloat(data.percentage) || 0); // Ограничение 0-100%
 
-                // Обновляем прогресс-бар
-                var progressElement = document.getElementById('progress');
-                progressElement.style.width = successPercentage + '%';
-
-                // Обновляем статистику
-                $("#passed").text(textToPassed);
-                $("#failed").text(textToFailed);
-
-
-                // Обновляем текст в карточке
-                $("#card-header").text(contentText);
+                        $(element).find(".card-header").text(data.content_text);
+                        $(element).find(".progress-text").text(percentage + "%");
+                        $(element).find(".progress").css("width", percentage + "%");
+                        $(element).find(".passed").text(data.text_to_passed);
+                        $(element).find(".failed").text(data.text_to_failed);
+                    }
+                });
             },
             error: function() {
-                $("#progress-text").text("Ошибка загрузки данных.");
+                console.error("Ошибка загрузки данных.");
             }
         });
     }
 
-    // Автоматически загружаем данные за текущий год при загрузке страницы
     let currentYear = new Date().getFullYear();
-    updateProgressBar(currentYear);
+    updateProgressBars(currentYear);
 
-    // Кнопки для выбора годов
     $(".year-btn").click(function() {
-        let year = $(this).data("year"); // Получаем год из data-атрибута кнопки
-        updateProgressBar(year);  // Загружаем данные для выбранного года
+        let year = $(this).data("year");
+        updateProgressBars(year);
     });
 });

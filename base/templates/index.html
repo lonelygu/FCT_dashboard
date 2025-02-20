@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
+    <!--Styles-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bars.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Buttons_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/content.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar_search.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/data-container.css') }}">
+</head>
+<head>
+    <!--JS local scripts-->
+
+</head>
+<head>
+    <meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ url_for('static', filename='js/bar_creator.js') }}"></script> <!-- Подключаем JS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bars.css') }}">
 </head>
 <body>
@@ -26,10 +37,12 @@
             </div>
 
             <!-- Контейнер для отображения графика -->
-            <div id="data-container" class="data-container">
+            <div id="data-container_1" class="data-container">
                 {% include 'linebar.html' %}
             </div>
-
+            <div id="data-container_2" class="data-container">
+                {% include 'linebar.html' %}
+            </div>
         </div>
     </div>
 </body>
