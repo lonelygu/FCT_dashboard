@@ -7,7 +7,7 @@ $(document).ready(function() {
             data: JSON.stringify({ year: year }),
             success: function(response) {
 
-                $(".linebar").each(function(index, element) {
+                $(".bar_graph").each(function(index, element) {
                     let containerId = "data-container_" + (index + 1);
                     let data = response[containerId];
 

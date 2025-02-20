@@ -10,8 +10,6 @@ def csv_parser(file_path):
     """
     try:
         df = pd.read_csv(file_path)
-        print(df.head())  # Посмотрим первые строки
-        print(df.columns)  # Проверим названия столбцов
 
         # Находим первый столбец с данными (исключаем ID)
         data_column = [col for col in df.columns if col.lower() != "id"][0]
@@ -26,4 +24,3 @@ def csv_parser(file_path):
     except Exception as e:
         print(f"Ошибка при обработке файла {file_path}: {e}")
         return 0, 0
-

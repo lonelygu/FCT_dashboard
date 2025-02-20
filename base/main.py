@@ -18,7 +18,6 @@ routes = {
 }
 
 
-# Функция для вычисления данных
 @main.route("/get_data", methods=["POST"])
 def get_data():
     data = request.get_json()
@@ -26,38 +25,37 @@ def get_data():
 
     # Маппинг файлов для каждого года
     file_mapping = {
-        2023: ["data/random_data1.csv", "data/random_data2.csv","data/random_data3.csv"],
-        2024: ["data/random_data4.csv", "data/random_data5.csv","data/random_data6.csv"],
-        2025: ["data/random_data7.csv", "data/random_data8.csv","data/random_data9.csv"]
+        2023: ["data/random_data_1.csv" , "data/random_data_2.csv", "data/random_data_3.csv"],
+        2024: ["data/random_data_4.csv", "data/random_data_5.csv", "data/random_data_6.csv"],
+        2025: ["data/random_data_7.csv", "data/random_data_8.csv", "data/random_data_9.csv"]
     }
 
     # Получаем список файлов для выбранного года
-    files_for_year = file_mapping.get(year, ["data/data1.csv"])
+    files_for_year = file_mapping.get(year, ["data/random_data_1.csv"])
 
-    # Переменная для хранения результатов
-    response_data = []
+    # Создаём словарь для хранения результатов
+    response_data = {}
 
     # Обрабатываем каждый файл для выбранного года
     for i, file_path in enumerate(files_for_year, start=1):
         passed, failed = csv_parser(file_path)
         total = passed + failed
 
-        if isinstance(total, int) or (isinstance(total, float) and total.is_integer()):
-            total = int(total)  # Приводим к int, если это float с целым значением
-        else:
-            total = None  # Или можно выбросить ошибку
+        # Безопасное деление (чтобы избежать деления на ноль)
+        percentage = round((int(passed) / max(1, int(total))) * 100, 2)
 
-        # Формируем ответ для каждого графика
-        response_data.append({
+        # Формируем ответ с ключом "data-container_X"
+        response_data[f"data-container_{i}"] = {
             "content_text": f"График {i} ({year})",
-            "percentage": round((passed / total) * 100 if total > 0 else 0, 2),
-            "passed": passed,
-            "failed": failed,
-            "text_to_passed": f"Пройдено: {passed}",
-            "text_to_failed": f"Не пройдено: {failed}"
-        })
+            "percentage": percentage,
+            "passed": int(passed),
+            "failed": int(failed),
+            "text_to_passed": f"Пройдено: {int(passed)}",
+            "text_to_failed": f"Не пройдено: {int(failed)}"
+        }
 
     return jsonify(response_data)
+
 
 
 # Register each route dynamically with a unique function name
