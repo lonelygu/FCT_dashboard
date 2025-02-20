@@ -108,6 +108,8 @@ body {
 
 .content {
     margin-top: 60px; /* Отступ, чтобы контент не налезал на шапку */
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -168,3 +170,6 @@ body {
     padding-left: 0;
 }
 
+.data-container {
+    margin-right: auto;
+}

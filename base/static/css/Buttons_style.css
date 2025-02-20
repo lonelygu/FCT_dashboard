@@ -1,0 +1,25 @@
+.year-btn {
+    background-color: #00509e; /* Синий цвет фона */
+    color: white; /* Белый цвет текста */
+    border: none; /* Убираем границу */
+    padding: 10px 20px; /* Внутренний отступ */
+    font-size: 16px; /* Размер шрифта */
+    border-radius: 8px; /* Закругленные углы */
+    cursor: pointer; /* Изменяем курсор при наведении */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.year-btn:hover {
+    background-color: #003366; /* Темно-синий при наведении */
+    transform: scale(1.05); /* Немного увеличивается */
+}
+
+.year-btn:active {
+    background-color: #002244; /* Ещё темнее при нажатии */
+    transform: scale(0.98); /* Чуть уменьшается при клике */
+}
+
+.year-btn:disabled {
+    background-color: #ccc; /* Серый цвет для неактивных кнопок */
+    cursor: not-allowed;
+}
