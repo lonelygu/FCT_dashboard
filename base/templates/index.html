@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bars.css') }}"> <!-- Подключаем bars.css -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bar_creator.js') }}" defer></script> <!-- Подключаем JS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bars.css') }}">
+</head>
+<body>
+    <div class="wrapper">
+        {% include 'sidebar.html' %}
+        {% include 'header.html' %}
+
+        <script src="{{ url_for('static', filename='js/bar_creator.js') }}"></script>
+        <div class="content">
+            <h1>Кабинет руководителя ОИВ</h1>
+
+            <!-- Кнопки для выбора годов -->
+            <div class="year-buttons">
+                <button class="year-btn" data-year="2023">2023</button>
+                <button class="year-btn" data-year="2024">2024</button>
+                <button class="year-btn" data-year="2025">2025</button>
+            </div>
+
+            <!-- Контейнер для отображения графика -->
+            <div id="data-container">
+                {% include 'linebar.html' %}
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

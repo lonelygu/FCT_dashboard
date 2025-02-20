@@ -1,0 +1,23 @@
+<!-- templates/sidebar.html -->
+<div class="sidebar">
+    <h1>Федеральный уровень</h1>
+    <div class="autocomplete">
+        <input type="text" id="searchInput" placeholder="Поиск...">
+        <div id="autocomplete-options"></div>
+    </div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li><a href="{{ url_for('main.dynamic_route_') }}">Главная</a></li>
+            <li><a href="{{ url_for('main.dynamic_route_map') }}">Карта Образ. Орган.</a></li>
+            <li><a href="{{ url_for('main.dynamic_route_monitoring') }}">Мониторинг</a></li>
+            <li><a href="{{ url_for('main.dynamic_route_analysis') }}">Результаты ГИА</a></li>
+            <li><a href="{{ url_for('main.dynamic_route_admission') }}">Поступление в Образ. Орган. Выш. Орг. Спец. Проф. Орг.</a></li>
+            <li><a href="{{ url_for('main.dynamic_route_calendar') }}">Календарь</a></li>
+            <li><a href="{{ url_for('main.dynamic_route_survey') }}">Анкетирование</a></li>
+            <li><a href="{{ url_for('main.dynamic_route_technical_sup') }}">Техническая поддержка</a></li>
+            <li><a href="{{ url_for('main.dynamic_route_documentation') }}">Документация</a></li>
+            <li><a href="{{ url_for('main.dynamic_route_contact_info') }}">Контактная информация</a></li>
+        </ul>
+    </nav>
+</div>
+<script src="{{ url_for('static', filename='js/autocomplete.js') }}"></script>
