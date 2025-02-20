@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/content.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar_search.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/data-container.css') }}">
 </head>
 <head>
     <!--JS local scripts-->
@@ -35,16 +34,17 @@
                 <button class="year-btn" data-year="2024">2024</button>
                 <button class="year-btn" data-year="2025">2025</button>
             </div>
-
-            <!-- Контейнер для отображения графика -->
-            <div id="data-container_1" class="data-container">
-                {% include 'bar_graph.html' %}
-            </div>
-            <div id="data-container_2" class="data-container">
-                {% include 'bar_graph.html' %}
-            </div>
-            <div id="data-container_3" class="data-container">
-                {% include 'bar_graph.html' %}
+            <div id="containers" class="containers">
+                <!-- Контейнеры для отображения графика -->
+                <div id="data-container_1" class="data-container">
+                    {% include 'bar_graph.html' %}
+                </div>
+                <div id="data-container_2" class="data-container">
+                    {% include 'bar_graph.html' %}
+                </div>
+                <div id="data-container_3" class="data-container">
+                    {% include 'bar_graph.html' %}
+                </div>
             </div>
         </div>
     </div>
