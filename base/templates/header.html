@@ -2,8 +2,9 @@
     <div class="header-content">
         <a href="/" class="logo">Главная</a>
         <div class="user-info">
-            <span>Пользователь</span>
-            <button class="logout-btn">Выход</button>
+            <!-- Здесь будет отображаться имя пользователя -->
+            <span>{{ current_user.id if current_user.is_authenticated else 'Гость' }}</span>
+            <button class="logout-btn" onclick="window.location.href='/logout'">Выход</button>
         </div>
     </div>
 </header>

@@ -6,13 +6,19 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar_search.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/content.css') }}">
 </head>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-{% include 'sidebar.html' %}
-{% include 'header.html' %}
+<div class="wrapper">
+    {% include 'sidebar.html' %}
+    {% include 'header.html' %}
+    <div class="content">
+
+    </div>
+</div>
 </body>
 </html>

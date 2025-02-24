@@ -1,18 +1,49 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!--Styles-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/content.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar_search.css') }}">
-</head>
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
 </head>
 <body>
-{% include 'sidebar.html' %}
-{% include 'header.html' %}
+<div class="wrapper">
+    {% include 'sidebar.html' %}
+    {% include 'header.html' %}
+    <div class="content">
+        <div class="events-container">
+                <div class="calendar-header">
+                <button id="prev-events" class="nav-btn">◄</button>
+                <h3>Список событий</h3>
+                <button id="next-events" class="nav-btn">►</button>
+            </div>
+
+            <ul id="events-list"></ul>
+        </div>
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <button class="nav-btn" id="prev-month">◄</button>
+                <span id="current-month">Сентябрь 2025</span>
+                <button class="nav-btn" id="next-month">►</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ПН</th><th>ВТ</th><th>СР</th><th>ЧТ</th><th>ПТ</th><th>СБ</th><th>ВС</th>
+                    </tr>
+                </thead>
+                <tbody id="calendar-body"></tbody>
+            </table>
+            <div class="legend">
+                <div class="legend-item"><span class="dot" style="background: #FFD700"></span> ГИА-9</div>
+                <div class="legend-item"><span class="dot" style="background: #32CD32"></span> ГИА-11</div>
+                <div class="legend-item"><span class="dot" style="background: #007BFF"></span> Другое</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
 </body>
 </html>

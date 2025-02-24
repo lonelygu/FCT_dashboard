@@ -1,4 +1,17 @@
 /* Стили для карточки */
+.containers {
+    display: flex; /* Размещаем элементы в строку */
+    justify-content: space-between; /* Равномерное распределение */
+    flex-wrap: wrap; /* Разрешаем перенос на новую строку */
+    gap: 20px; /* Отступ между графиками */
+    width: 100%; /* Чтобы контейнер занимал всю ширину */
+}
+
+.data-container {
+    flex: 0 1 calc(33.333% - 20px); /* Элементы не растут, но могут уменьшаться */
+    min-width: 250px;
+}
+
 .card {
     background-color: #ffffff;
     border-radius: 8px;

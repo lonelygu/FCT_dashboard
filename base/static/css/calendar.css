@@ -1,0 +1,282 @@
+/* Основной контейнер календаря */
+.calendar-container {
+    width: 300px;
+    position: absolute;
+    right: 20px;
+    top: 320px; /* Смещение вниз */
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Легкая тень для отступа */
+    padding: 15px;
+}
+
+/* Заголовок календаря */
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 10px;
+    position: relative;
+}
+
+/* Кнопки навигации в заголовке */
+.nav-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+/* Ховер-эффект для кнопок навигации */
+.nav-btn:hover {
+    color: #333;
+}
+
+/* Таблица с днями */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+
+/* Стиль для ячеек таблицы (дни месяца) */
+th, td {
+    width: 14%;
+    height: 40px;
+    text-align: center;
+    font-size: 14px;
+    position: relative;
+    vertical-align: top;
+}
+
+/* Наведение на ячейки */
+td:hover {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+}
+
+/* Стиль для номеров дней */
+.day-number {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Точки событий */
+.dot {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 3px;
+}
+
+/* Текст события (мелкий) */
+.event-text {
+    font-size: 10px;
+    color: #666;
+    margin-top: 2px;
+}
+
+/* Цвета для различных типов событий */
+.dot[data-event="ГИА-9"] {
+    background: #FFD700; /* Желтый для ГИА-9 */
+}
+
+.dot[data-event="ГИА-11"] {
+    background: #32CD32; /* Зеленый для ГИА-11 */
+}
+
+.dot[data-event="Конференция"] {
+    background: #FF4500; /* Оранжевый для конференций */
+}
+
+.dot[data-event="Семинар"] {
+    background: #007BFF; /* Синий для семинаров */
+}
+
+/* Легенда событий (цветные метки) */
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+/* Элементы легенды */
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Иконки для легенды (цветные точки) */
+.legend-item span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+/* Контейнер событий */
+.events-container {
+    width: 840px; /* Ширина контейнера */
+    padding: 0px 10px;
+    background-color: #131D73; /* Светло-голубой фон */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #131D73, #e0f7fa); /* Градиент фона */
+    position: relative;
+}
+
+/* Список событий */
+#events-list {
+    display: grid; /* Используется grid для расположения элементов */
+    grid-template-columns: repeat(6, 2fr); /* 6 столбцов */
+    gap: 10px; /* Отступы между элементами */
+    padding: 0;
+    margin: 0;
+    background-color: #ffffff; /* Белый фон */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Тень */
+}
+
+/* Элементы списка событий */
+#events-list li {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Тень для элементов */
+    text-align: center;
+    border-left: 5px solid #007BFF; /* Синий акцент слева */
+}
+
+/* Ховер-эффект для контейнера событий */
+.events-container:hover {
+    background-color: #b2ebf2; /* Светлее при наведении */
+}
+
+/* Заголовок с кнопками списка событий */
+.events-header {
+    display: flex;
+    align-items: center; /* Центрирование по вертикали */
+    justify-content: space-between; /* Кнопки с двух сторон */
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    margin-top: -10px; /* Отрицательный отступ для подъема заголовка */
+}
+
+/* Кнопки для переключения событий (предыдущее и следующее) */
+#prev-events, #next-events {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+/* Ховер-эффект для кнопок навигации событий */
+#prev-events:hover, #next-events:hover {
+    color: #333;
+}
+
+/* Удалённая избыточная часть: Стили для списка событий повторялись */
+#events-list {
+    display: grid; /* Используем grid для списка событий */
+    grid-template-columns: repeat(6, 2fr); /* 2 столбца */
+    gap: 10px; /* Отступы между элементами */
+    padding: 0;
+    margin: 0;
+    background: transparent; /* Убираем задний фон */
+    border-radius: 8px;
+    box-shadow: none; /* Убираем тень, если она есть */
+}
+/* Стили для каждого элемента списка событий */
+#events-list li {
+    padding: 8px;
+    background: #ffffff;
+    margin-bottom: 5px;
+    border-left: 5px solid #007BFF;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Всплывающее окно событий (при наведении на дату) */
+.events-popup {
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 150px; /* Ширина всплывающего окна */
+    font-size: 12px;
+    display: none; /* Скрыто по умолчанию */
+    z-index: 10;
+    top: 0;  /* Расположено у верхнего края */
+    left: 0; /* Расположено у левого края */
+}
+
+/* Список внутри всплывающего окна */
+.events-popup ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Стили для элементов в всплывающем окне */
+.events-popup ul li {
+    margin-bottom: 3px;
+    font-size: 12px;
+}
+
+/* Дот (точка) в всплывающем окне */
+.events-popup .dot {
+    width: 6px;
+    height: 6px;
+    margin-right: 5px;
+}
+
+/* Стили для элементов события */
+.event-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+/* Дата события */
+.event-date {
+    font-weight: bold;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Заголовок события */
+.event-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px 0;
+    color: #000;
+}
+
+/* Описание события */
+.event-description {
+    font-size: 14px;
+    color: #777;
+    text-align: center;
+}
