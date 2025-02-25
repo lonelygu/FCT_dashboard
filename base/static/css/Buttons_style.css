@@ -23,3 +23,35 @@
     background-color: #ccc; /* Серый цвет для неактивных кнопок */
     cursor: not-allowed;
 }
+
+
+/* Стиль для кнопок ГИА-9 и ГИА-11 */
+.select-btn {
+    background-color: #00509e; /* Синий цвет фона */
+    color: white; /* Белый цвет текста */
+    border: none; /* Убираем границу */
+    padding: 8px 20px; /* Меньше внутренние отступы для более компактного размера */
+    font-size: 16px; /* Размер шрифта */
+    border-radius: 30px; /* Круглая форма для стиля таблетки */
+    cursor: pointer; /* Изменяем курсор при наведении */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    min-width: 115px; /* Минимальная ширина для кнопки */
+    height: 35px; /* Уменьшаем высоту кнопки */
+    margin-top: 15px; /* Смещаем кнопку вниз */
+}
+
+/* Эффект наведения для кнопок */
+.select-btn:hover {
+}
+
+/* Эффект при нажатии на кнопку */
+.select-btn:active {
+    background-color: #002244; /* Ещё темнее при нажатии */
+    transform: scale(0.98); /* Чуть уменьшается при клике */
+}
+
+/* Стиль для неактивных кнопок */
+.select-btn:disabled {
+    background-color: #ccc; /* Серый цвет для неактивных кнопок */
+    cursor: not-allowed;
+}

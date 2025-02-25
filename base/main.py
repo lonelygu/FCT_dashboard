@@ -2,6 +2,7 @@ from flask import Flask, Blueprint, render_template, request, redirect, url_for,
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 from csv_parser import csv_parser
+
 # Ваши маршруты (как в первом фрагменте)
 routes = {
     '/': 'index.html',
@@ -13,7 +14,10 @@ routes = {
     '/survey': 'survey.html',
     '/technical_sup': 'technical_sup.html',
     '/documentation': 'documentation.html',
-    '/contact_info': 'contact_info.html'
+    '/contact_info': 'contact_info.html',
+    '/monitoring/gia':'gia.html',
+    '/monitoring/education':'education.html',
+    '/monitoring/spo-reporting':'spo-reporting.html'
 }
 
 app = Flask(__name__)
@@ -83,44 +87,62 @@ def index():
     return render_template('index.html')
 
 
-# Логика получения данных (по примеру из первого фрагмента)
-@main.route("/get_data", methods=["POST"])
+@app.route('/get_data', methods=['POST'])
 def get_data():
     data = request.get_json()
-    year = data.get("year", 2023)  # По умолчанию 2023 год
+    year = data.get("year", 2023)
+    form_type = data.get("formType", "/")  # Получаем formType из запроса
 
-    # Маппинг файлов для каждого года
-    file_mapping = {
-        2023: ["data/random_data_1.csv", "data/random_data_2.csv", "data/random_data_3.csv"],
-        2024: ["data/random_data_4.csv", "data/random_data_5.csv", "data/random_data_6.csv"],
-        2025: ["data/random_data_7.csv", "data/random_data_8.csv", "data/random_data_9.csv"]
-    }
+    # Маппинг файлов для каждого года (с учетом formType)
+    if form_type == "/monitoring/gia":
+        # Возвращаем 3 файла для формы ГИА, каждый с уникальными значениями
+        file_mapping = {
+            2025: [
+                {"file": "data/random_data_9.csv", "content_text": "График 1 (2023)", "text_to_passed": "Пройдено: ", "text_to_failed": "Не пройдено: "},
+                {"file": "data/random_data_2.csv", "content_text": "График 2 (2024)", "text_to_passed": "ПроQдено: ", "text_to_failed": "Не пройдено: "},
+                {"file": "data/random_data_1.csv", "content_text": "График 3 (2025)", "text_to_passed": "ПройденYо: ", "text_to_failed": "Не пройдено: "},
+            ]
+        }
+    elif form_type == "/":
+        # Возвращаем другие файлы для других страниц
+        file_mapping = {
+            2023: [
+                {"file": "", "content_text": "Error", "text_to_passed": "we dont have data", "text_to_failed": "on this period"},
+            ]
+        }
+    else:
+        file_mapping ={
+            2025:["ERROR"]
+        }
 
     # Получаем список файлов для выбранного года
-    files_for_year = file_mapping.get(year, ["data/random_data_1.csv"])
+    files_for_year = file_mapping.get(year, [{"file": "", "content_text": "Error", "text_to_passed": "we dont have data, code ", "text_to_failed": "on this period, code "}])
 
     # Создаём словарь для хранения результатов
     response_data = {}
 
     # Обрабатываем каждый файл для выбранного года
-    for i, file_path in enumerate(files_for_year, start=1):
+    for i, file_info in enumerate(files_for_year, start=1):
+        file_path = file_info["file"]
         passed, failed = csv_parser(file_path)
         total = passed + failed
 
         # Безопасное деление (чтобы избежать деления на ноль)
         percentage = round((int(passed) / max(1, int(total))) * 100, 2)
 
-        # Формируем ответ с ключом "data-container_X"
+        # Формируем ответ с уникальными данными для каждого файла
         response_data[f"data-container_{i}"] = {
-            "content_text": f"График {i} ({year})",
+            "content_text": file_info["content_text"],
             "percentage": percentage,
             "passed": int(passed),
             "failed": int(failed),
-            "text_to_passed": f"Пройдено: {int(passed)}",
-            "text_to_failed": f"Не пройдено: {int(failed)}"
+            "text_to_passed": file_info["text_to_passed"]+str(passed),
+            "text_to_failed": file_info["text_to_failed"]+str(failed)
         }
 
     return jsonify(response_data)
+
+
 
 
 # Пример событий
@@ -184,21 +206,21 @@ def get_events():
 
 
 # Динамическая регистрация маршрутов для каждого шаблона
-# Динамическая регистрация маршрутов для каждого шаблона
 for route, template in routes.items():
     def make_route(template=template, route=route):  # добавлен параметр для маршрута
         # Уникальная функция для каждого маршрута
+        @login_required
         def dynamic_route():
             if current_user.is_authenticated:
                 return render_template(template)
             else:
                 return redirect(url_for('main.login'))  # Перенаправление для неавторизованных пользователей
 
-        dynamic_route.__name__ = f"dynamic_route_{route.replace('/', '')}"  # Уникальное имя функции
+        dynamic_route.__name__ = f"dynamic_route_{route.strip('/').replace('/', '_')}"  # Уникальное имя функции
         return dynamic_route
 
     # Создание и регистрация маршрута
-    main.add_url_rule(route, view_func=make_route(template, route))
+    main.add_url_rule(route, view_func=make_route(template, route), endpoint=f"dynamic_route_{route.strip('/').replace('/', '_')}")
 
 
 # Регистрируем блюпринт

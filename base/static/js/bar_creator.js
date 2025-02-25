@@ -1,12 +1,13 @@
 $(document).ready(function() {
-    function updateProgressBars(year) {
+    function updateProgressBars(year, url, formType) {
+        console.log('Sending request with formType:', formType);  // Логируем formType
         $.ajax({
-            url: "/get_data",
+            url: url,
             type: "POST",
             contentType: "application/json",
-            data: JSON.stringify({ year: year }),
+            data: JSON.stringify({ year: year, formType: formType }),  // Добавляем formType в запрос
             success: function(response) {
-
+                console.log('Received response:', response);  // Логируем ответ
                 $(".bar_graph").each(function(index, element) {
                     let containerId = "data-container_" + (index + 1);
                     let data = response[containerId];
@@ -29,10 +30,16 @@ $(document).ready(function() {
     }
 
     let currentYear = new Date().getFullYear();
-    updateProgressBars(currentYear);
+    let currentPageUrl = window.location.pathname; // Получаем текущий URL
+    // Изменяем условие проверки на includes, чтобы правильно обработать /gia
+    let formType = (currentPageUrl.includes('/monitoring/gia')) ? '/monitoring/gia' : '/'; // Передаем правильный formType
+    console.log('Current page URL:', currentPageUrl);  // Логируем текущую страницу
+    let dataUrl = '/get_data'; // Единый URL для обоих случаев
+
+    updateProgressBars(currentYear, dataUrl, formType); // Передаем formType
 
     $(".year-btn").click(function() {
         let year = $(this).data("year");
-        updateProgressBars(year);
+        updateProgressBars(year, dataUrl, formType); // Передаем formType
     });
 });
