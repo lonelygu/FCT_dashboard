@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* styles.css */
+* {
+  font-family: 'Helvetica', sans-serif;
+}
+/* Стили для полосы прокрутки */
+@layer components {
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 8px; /* Устанавливаем ширину полосы прокрутки */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: #4a5568; /* Цвет ползунка */
+    border-radius: 10px; /* Скругление углов */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background-color: #2d3748; /* Цвет фона полосы прокрутки */
+  }
+}
