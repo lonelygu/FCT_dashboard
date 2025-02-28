@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { useNavigate } from "react-router-dom";
-import EventCalendar from "./calendar";
+import '../styles.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
@@ -176,7 +176,6 @@ const Home = () => {
       </div>
       <ChartContainer chartData1={chartData1} chartData2={chartData2} chartData3={chartData3} loading={loading} />
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-10">
-        <EventCalendar events={events} /> {/* Добавляем календарь сюда */}
         <EventsList events={events} />
       </div>
     </div>

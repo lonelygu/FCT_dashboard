@@ -5,6 +5,10 @@
 * {
   font-family: 'Helvetica', sans-serif;
 }
+.bg-customBlue {
+  background-color: #131D73 ; /* Гарантированно переопределяем Bootstrap */
+}
+
 /* Стили для полосы прокрутки */
 @layer components {
   .scrollbar-custom::-webkit-scrollbar {
