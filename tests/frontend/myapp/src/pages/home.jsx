@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { useNavigate } from "react-router-dom";
+import Calendar from "./Calendar";
 import '../styles.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
@@ -168,7 +169,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="p-5 bg-gray-50 min-h-screen">
+    <div className="p-5 min-h-screen">
       <h1 className="text-3xl font-bold mb-5 text-blue-700">Кабинет руководителя ОИВ</h1>
       <YearSelector onYearChange={handleYearChange} />
       <div className="mt-5">
@@ -177,6 +178,7 @@ const Home = () => {
       <ChartContainer chartData1={chartData1} chartData2={chartData2} chartData3={chartData3} loading={loading} />
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-10">
         <EventsList events={events} />
+        <Calendar eventsData={events} />
       </div>
     </div>
   );

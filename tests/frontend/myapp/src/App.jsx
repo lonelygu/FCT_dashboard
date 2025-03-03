@@ -6,6 +6,9 @@ import './styles.css';
 const Sidebar = lazy(() => import("./components/Sidebar/sidebar"));
 const Header = lazy(() => import("./components/Header/header"));
 const Home = lazy(() => import("./pages/home"));
+const Calendar = lazy(() => import("./pages/calendar"));
+const Planning = lazy(() => import("./pages/planning_gia"));
+const Test = lazy(() => import("./pages/test"));
 
 const App = () => {
   const user = { id: "User123" };
@@ -31,11 +34,12 @@ const App = () => {
                 <Route path="/monitoring" element={<h1 className="text-2xl">Мониторинг</h1>} />
                 <Route path="/analysis" element={<h1 className="text-2xl">Результаты ГИА</h1>} />
                 <Route path="/admission" element={<h1 className="text-2xl">Поступление</h1>} />
-                <Route path="/calendar" element={<h1 className="text-2xl">Календарь</h1>} />
                 <Route path="/survey" element={<h1 className="text-2xl">Анкетирование</h1>} />
                 <Route path="/support" element={<h1 className="text-2xl">Техподдержка</h1>} />
                 <Route path="/docs" element={<h1 className="text-2xl">Документация</h1>} />
                 <Route path="/contact" element={<h1 className="text-2xl">Контакты</h1>} />
+                <Route path="/monitoring/planning" element={<Planning />} />
+                <Route path="/test" element={<Test />} />
               </Routes>
             </Suspense>
           </div>
